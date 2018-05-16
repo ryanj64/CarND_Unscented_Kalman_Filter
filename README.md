@@ -1,46 +1,22 @@
-# Unscented Kalman Filter Project Starter Code
-Self-Driving Car Engineer Nanodegree Program
 
-In this project utilize an Unscented Kalman Filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
+[Simulator Dataset 1]: ./images/sim_dataset_1.png "Simulator Dataset 1"
+[Simulator Dataset 2]: ./images/sim_dataset_2.png "Simulator Dataset 2"
+[Radar NIS]: ./images/radar_nis.png "Radar NIS"
+[Lidar NIS]: ./images/lidar_nis.png "Lidar NIS"
+[RMSE Position X]: ./images/rmse_position_x.png "RMSE Position X"
+[RMSE Position Y]: ./images/rmse_position_y.png "RMSE Position Y"
+[RMSE Velocity X]: ./images/rmse_velocity_x.png "RMSE Velocity X"
+[RMSE Velocity Y]: ./images/rmse_velocity_y.png "RMSE Velocity Y"
 
-This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
+# Unscented Kalman Filter Project 7
 
-This repository includes two files that can be used to set up and intall [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use either Docker, VMware, or even [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. Please see [this concept in the classroom](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/16cf4a78-4fc7-49e1-8621-3450ca938b77) for the required version and installation scripts.
-
-Once the install for uWebSocketIO is complete, the main program can be built and ran by doing the following from the project top directory.
-
-1. mkdir build
-2. cd build
-3. cmake ..
-4. make
-5. ./UnscentedKF
-
-Tips for setting up your environment can be found [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/23d376c7-0195-4276-bdf0-e02f1f3c665d)
-
-Note that the programs that need to be written to accomplish the project are src/ukf.cpp, src/ukf.h, tools.cpp, and tools.h
-
-The program main.cpp has already been filled out, but feel free to modify it.
-
-Here is the main protcol that main.cpp uses for uWebSocketIO in communicating with the simulator.
-
-
-INPUT: values provided by the simulator to the c++ program
-
-["sensor_measurement"] => the measurment that the simulator observed (either lidar or radar)
-
-
-OUTPUT: values provided by the c++ program to the simulator
-
-["estimate_x"] <= kalman filter estimated position x
-["estimate_y"] <= kalman filter estimated position y
-["rmse_x"]
-["rmse_y"]
-["rmse_vx"]
-["rmse_vy"]
+The project utilizes an Unscented Kalman Filter(UKF) to estimate the state of a moving object of interest with noisy lidar and radar measurements. Root Mean Squared Error(RMSE) values are recorded to verify how well the UKF algorithm did. The project uses a simulator provided by Udacity to send data to the program.  The program captures this data using `uWebSockets` API.  For more information visit the host site for this project at  https://github.com/udacity/CarND-Unscented-Kalman-Filter-Project.
 
 ---
 
-## Other Important Dependencies
+## Dependencies
+
+Dependencies are taken from the host project created by Udacity.
 * cmake >= 3.5
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1 (Linux, Mac), 3.81 (Windows)
@@ -54,39 +30,132 @@ OUTPUT: values provided by the c++ program to the simulator
 
 ## Basic Build Instructions
 
-1. Clone this repo.
+1. Clone this repository.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./UnscentedKF` Previous versions use i/o from text files.  The current state uses i/o
-from the simulator.
+4. Run it: `./UnscentedKF`
 
-## Editor Settings
+## Project Rubic Points
 
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
+### Compiling
+#### Your code should compile.
+Code must compile without errors with `cmake` and `make`.
+Given that we've made CMakeLists.txt as general as possible, it's recommended that you do not change it unless you can guarantee that your changes will still compile on any platform.
 
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
+### Accuracy
+#### px, py, vx, vy output coordinates must have an RMSE <= [.09, .10, .40, .30] when using the file: "obj_pose-laser-radar-synthetic-input.txt", which is the same data file the simulator uses for Dataset 1.
 
-## Code Style
+Your algorithm will be run against "obj_pose-laser-radar-synthetic-input.txt". We'll collect the positions that your algorithm outputs and compare them to ground truth data. Your px, py, vx, and vy RMSE should be less than or equal to the values [.09, .10, .40, .30].
 
-Please stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html) as much as possible.
+The final RMSE values for `dataset 1` and `dataset 2` are:
 
-## Generating Additional Data
+RMSE Parameter  | Dataset 1  | Dataset 2   |
+------|------------|-------------|
+Position X  | 0.0762  | 0.1141
+Position Y  | 0.0795  | 0.1060
+Velocity X  | 0.3848  | 0.8013
+Velocity Y  | 0.2546  | 0.5436
 
-This is optional!
 
-If you'd like to generate your own radar and lidar data, see the
-[utilities repo](https://github.com/udacity/CarND-Mercedes-SF-Utilities) for
-Matlab scripts that can generate additional data.
 
-## Project Instructions and Rubric
+The screenshot below shows the final values at the end of simulation for dataset 1.
 
-This information is only accessible by people who are already enrolled in Term 2
-of CarND. If you are enrolled, see [the project page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/c3eb3583-17b2-4d83-abf7-d852ae1b9fff/concepts/f437b8b0-f2d8-43b0-9662-72ac4e4029c1)
-for instructions and the project rubric.
+![Simulator Dataset 1]
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+The screenshot below shows the final values at the end of simulation for dataset 2.
 
+![Simulator Dataset 2]
+
+### Follows the Correct Algorithm
+
+#### Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.
+
+While you may be creative with your implementation, there is a well-defined set of steps that must take place in order to successfully build a Kalman Filter. As such, your project should follow the algorithm as described in the preceding lesson.
+
+My implementation of the Unscented Kalman Filter follows closely with the lesson material.
+
+#### Your Kalman Filter algorithm handles the first measurements appropriately.
+
+Your algorithm should use the first measurements to initialize the state vectors and covariance matrices.
+
+The implementation initializes the state and covariance matrices based on the first data (which is the lidar for dataset 1).
+
+#### Your Kalman Filter algorithm first predicts then updates.
+
+Upon receiving a measurement after the first, the algorithm should predict object position to the current timestep and then update the prediction using the new measurement.
+
+The implementation follows the process flow as show below:
+* Prediction based on the current timestep
+  - Generated sigma points
+  - Predicted sigma points
+  - Predicted mean and covariance
+* Update
+  - Predict measurement
+  - Update state
+
+#### Your Kalman Filter can handle radar and lidar measurements.
+
+Your algorithm sets up the appropriate matrices given the type of measurement and calls the correct measurement function for a given sensor type.
+
+In the `ProcessMeasurement` function, different sensor data is handled through if-else statements.
+
+`
+
+    if(meas_package.sensor_type_ == MeasurementPackage::RADAR)
+    {
+      double rho, theta, rho_dot;
+      rho = meas_package.raw_measurements_[0];
+      theta = meas_package.raw_measurements_[1];
+      rho_dot = meas_package.raw_measurements_[2];
+
+      x_(0) = rho*cos(theta);
+      x_(1) = rho*sin(theta);
+      x_(2) = sqrt(pow(rho_dot*cos(theta),2)+pow(rho_dot*sin(theta),2));
+      x_(3) = 0;
+      x_(4) = 0;
+    }
+    else if(meas_package.sensor_type_ == MeasurementPackage::LASER)
+    {
+      double px, py;
+      px = meas_package.raw_measurements_[0];
+      py = meas_package.raw_measurements_[1];
+
+      x_(0) = px;
+      x_(1) = py;
+      // Changed from 0 to 1 (improved the vx and vy RMSE value)
+      x_(2) = 1;
+      x_(3) = 1;
+      x_(4) = 1;
+    }
+
+`
+
+### Code Efficiency
+
+#### Your algorithm should avoid unnecessary calculations.
+
+This is mostly a "code smell" test. Your algorithm does not need to sacrifice comprehension, stability, robustness or security for speed, however it should maintain good practice with respect to calculations.
+
+Here are some things to avoid. This is not a complete list, but rather a few examples of inefficiencies.
+
+Running the exact same calculation repeatedly when you can run it once, store the value and then reuse the value later.
+Loops that run too many times.
+Creating unnecessarily complex data structures when simpler structures work equivalently.
+Unnecessary control flow checks.
+
+
+### Suggestions to Make Your Project Stand Out!
+
+#### NIS
+
+The radar NIS graph is shown below.  There are not many peaks that exceed 7.815, so the initialization values are acquitted.
+![Radar NIS]
+
+The lidar NIS graph is shown below.  There are not many peaks that exceed 5.991, so the initialization values are acquitted.
+![Lidar NIS]
+
+#### EKF vs. UKF RMSE Values
+![RMSE Position X]
+![RMSE Position Y]
+![RMSE Velocity X]
+![RMSE Velocity Y]
