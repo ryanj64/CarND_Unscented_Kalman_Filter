@@ -72,7 +72,10 @@ public:
   Tools tools_;
   int n_sigma_points_augmented_;
   long long  previous_timestamp_;
-  double nis_;
+  double nis_; 
+  ///* Lidar update variables
+  MatrixXd R_laser_;
+  MatrixXd H_laser_;
 
 
   /**
